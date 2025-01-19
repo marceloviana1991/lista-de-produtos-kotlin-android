@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Lista de Produtos</string>
+    <string name="edit_text_nome_activity_formulario_produto">Nome</string>
+    <string name="edit_text_descricao_activity_formulario_produto">Descrição</string>
+    <string name="edit_text_valor_activity_formulario_produto">Valor</string>
+    <string name="button_salvar_activity_formulario_produto">Salvar</string>
+</resources>
