@@ -1,5 +1,6 @@
 package marceloviana1991.myapplication.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -36,5 +37,11 @@ class PrincipalActivity : AppCompatActivity() {
                 Produto("produto", "descrição", BigDecimal(1))
             )
         )
+
+        val floatingActionButton = binding.floatingActionButton
+        floatingActionButton.setOnClickListener {
+            val intent = Intent(this, FormularioProdutoActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
