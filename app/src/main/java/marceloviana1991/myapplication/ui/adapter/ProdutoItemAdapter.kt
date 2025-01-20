@@ -1,5 +1,6 @@
 package marceloviana1991.myapplication.ui.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,8 +10,10 @@ import marceloviana1991.myapplication.databinding.AdapterProdutoItemBinding
 
 class ProdutoItemAdapter(
     private val context: Context,
-    private val produtos: List<Produto>
+    produtos: List<Produto>
 ) : RecyclerView.Adapter<ProdutoItemAdapter.ViewHolder>() {
+
+    private val produtos = produtos.toMutableList()
 
     class ViewHolder(
         private val binding: AdapterProdutoItemBinding
@@ -40,4 +43,10 @@ class ProdutoItemAdapter(
         holder.vincula(produto)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun atualiza(produtos: List<Produto>) {
+        this.produtos.clear()
+        this.produtos.addAll(produtos)
+        notifyDataSetChanged()
+    }
 }

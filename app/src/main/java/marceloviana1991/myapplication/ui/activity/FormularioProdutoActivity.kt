@@ -1,12 +1,11 @@
 package marceloviana1991.myapplication.ui.activity
 
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import marceloviana1991.myapplication.dao.ProdutosDao
 import marceloviana1991.myapplication.databinding.ActivityFormularioProdutoBinding
 import marceloviana1991.myapplication.model.Produto
 import java.math.BigDecimal
@@ -19,6 +18,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.activityFormularioProduto) { v, insets ->
@@ -30,7 +30,11 @@ class FormularioProdutoActivity : AppCompatActivity() {
         val buttonSalvar = binding.buttonSalvarActivityFormularioProduto
         buttonSalvar.setOnClickListener {
             val produto = capturaDadosDoEditText()
-            Log.i("FormularioProdutoActivity", "onClick: $produto")
+
+            val produtosDao = ProdutosDao()
+            produtosDao.adiciona(produto)
+
+            finish()
         }
     }
 

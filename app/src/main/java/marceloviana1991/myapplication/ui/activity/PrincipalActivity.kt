@@ -6,6 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import marceloviana1991.myapplication.dao.ProdutosDao
 import marceloviana1991.myapplication.model.Produto
 import marceloviana1991.myapplication.ui.adapter.ProdutoItemAdapter
 import marceloviana1991.myapplication.databinding.ActivityPrincipalBinding
@@ -17,8 +18,13 @@ class PrincipalActivity : AppCompatActivity() {
         ActivityPrincipalBinding.inflate(layoutInflater)
     }
 
+    private val produtosDao = ProdutosDao()
+
+    private val adapter = ProdutoItemAdapter(this, produtosDao.buscaTodos())
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.activityPrincipal) { v, insets ->
@@ -28,20 +34,17 @@ class PrincipalActivity : AppCompatActivity() {
         }
 
         val recyclerView = binding.recyclerViewActivityPrincipal
-        recyclerView.adapter = ProdutoItemAdapter(
-            this, listOf(
-                Produto("produto", "descrição", BigDecimal(1)),
-                Produto("produto", "descrição", BigDecimal(1)),
-                Produto("produto", "descrição", BigDecimal(1)),
-                Produto("produto", "descrição", BigDecimal(1)),
-                Produto("produto", "descrição", BigDecimal(1))
-            )
-        )
+        recyclerView.adapter = adapter
 
         val floatingActionButton = binding.floatingActionButton
         floatingActionButton.setOnClickListener {
             val intent = Intent(this, FormularioProdutoActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter.atualiza(produtosDao.buscaTodos())
     }
 }
