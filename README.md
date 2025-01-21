@@ -8,4 +8,3 @@ O projeto consiste em uma aplicação kotlin para android composta por uma lista
 |--------------------------------------|------------------------------------|
 | ![principal](doc/tela-principal.png) | ![formulario](doc/formulario.png)  |
 
-![tela](doc/tela.gif)
