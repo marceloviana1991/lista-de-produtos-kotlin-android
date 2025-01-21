@@ -31,8 +31,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
         buttonSalvar.setOnClickListener {
             val produto = capturaDadosDoEditText()
 
-            val produtosDao = ProdutosDao()
-            produtosDao.adiciona(produto)
+            ProdutosDao.adiciona(produto)
 
             finish()
         }

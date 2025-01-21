@@ -18,9 +18,7 @@ class PrincipalActivity : AppCompatActivity() {
         ActivityPrincipalBinding.inflate(layoutInflater)
     }
 
-    private val produtosDao = ProdutosDao()
-
-    private val adapter = ProdutoItemAdapter(this, produtosDao.buscaTodos())
+    private val adapter = ProdutoItemAdapter(this, ProdutosDao.buscaTodos())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +43,6 @@ class PrincipalActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        adapter.atualiza(produtosDao.buscaTodos())
+        adapter.atualiza(ProdutosDao.buscaTodos())
     }
 }
