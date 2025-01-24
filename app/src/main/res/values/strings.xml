@@ -6,4 +6,5 @@
     <string name="button_salvar_activity_formulario_produto">Salvar</string>
     <string name="imagem_do_produto">Imagem do Produto</string>
     <string name="imagem_activity_formulario_produto">Imagem formulario</string>
+    <string name="action_button_adicionar">action_button_adicionar</string>
 </resources>
