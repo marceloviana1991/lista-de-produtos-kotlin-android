@@ -2,9 +2,11 @@ package marceloviana1991.myapplication.ui.activity
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import marceloviana1991.myapplication.R
 import marceloviana1991.myapplication.dao.ProdutosDao
 import marceloviana1991.myapplication.databinding.ActivityFormularioProdutoBinding
 import marceloviana1991.myapplication.model.Produto
@@ -34,6 +36,16 @@ class FormularioProdutoActivity : AppCompatActivity() {
             ProdutosDao.adiciona(produto)
 
             finish()
+        }
+
+        binding.imageViewActivityFormularioProduto.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setView(R.layout.formulario_imagem)
+                .setPositiveButton("Confirmar") { _, _ ->
+                }
+                .setNegativeButton("Cancelar") { _, _ ->
+                }
+                .show()
         }
     }
 

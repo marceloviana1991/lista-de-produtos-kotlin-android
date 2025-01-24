@@ -7,10 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import marceloviana1991.myapplication.dao.ProdutosDao
-import marceloviana1991.myapplication.model.Produto
 import marceloviana1991.myapplication.ui.adapter.ProdutoItemAdapter
 import marceloviana1991.myapplication.databinding.ActivityPrincipalBinding
-import java.math.BigDecimal
 
 class PrincipalActivity : AppCompatActivity() {
 
@@ -39,6 +37,8 @@ class PrincipalActivity : AppCompatActivity() {
             val intent = Intent(this, FormularioProdutoActivity::class.java)
             startActivity(intent)
         }
+
+
     }
 
     override fun onResume() {

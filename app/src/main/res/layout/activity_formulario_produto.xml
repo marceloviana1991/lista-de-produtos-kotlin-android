@@ -21,8 +21,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:srcCompat="@tools:sample/backgrounds/scenic"
-            app:srcCompat="@android:color/holo_purple" />
+            tools:srcCompat="@drawable/imagem_padrao"
+            app:srcCompat="@drawable/imagem_padrao" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_nome_activity_formulario_produto"

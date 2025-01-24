@@ -7,4 +7,6 @@
     <string name="imagem_do_produto">Imagem do Produto</string>
     <string name="imagem_activity_formulario_produto">Imagem formulario</string>
     <string name="action_button_adicionar">action_button_adicionar</string>
+    <string name="carregar_formulario_imagem">Carregar</string>
+    <string name="edit_text_formulario_imagem">URL da imagem</string>
 </resources>
