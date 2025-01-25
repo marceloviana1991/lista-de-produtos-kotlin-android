@@ -6,10 +6,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import coil3.load
-import coil3.request.error
-import coil3.request.fallback
-import marceloviana1991.myapplication.R
 import marceloviana1991.myapplication.dao.ProdutosDao
 import marceloviana1991.myapplication.databinding.ActivityFormularioProdutoBinding
 import marceloviana1991.myapplication.databinding.AlertDialogFormularioImagemBinding

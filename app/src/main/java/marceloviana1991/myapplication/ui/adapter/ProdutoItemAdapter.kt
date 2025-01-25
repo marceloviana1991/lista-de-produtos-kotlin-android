@@ -5,10 +5,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil3.load
-import coil3.request.error
-import coil3.request.fallback
-import marceloviana1991.myapplication.R
 import marceloviana1991.myapplication.model.Produto
 import marceloviana1991.myapplication.databinding.AdapterProdutoItemBinding
 import marceloviana1991.myapplication.extensions.carregarImagem
