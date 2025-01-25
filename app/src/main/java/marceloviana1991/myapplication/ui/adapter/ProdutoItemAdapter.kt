@@ -11,6 +11,7 @@ import coil3.request.fallback
 import marceloviana1991.myapplication.R
 import marceloviana1991.myapplication.model.Produto
 import marceloviana1991.myapplication.databinding.AdapterProdutoItemBinding
+import marceloviana1991.myapplication.extensions.carregarImagem
 import java.math.BigDecimal
 import java.text.NumberFormat
 import java.util.Locale
@@ -33,10 +34,7 @@ class ProdutoItemAdapter(
             val valor = binding.textViewValorAdapterProdutoItem
             val valorEmMoeda = formataParaMoedaBrasileira(produto.valor)
             valor.text = valorEmMoeda
-            binding.imageViewAdapterProdutoItem.load(produto.imagem) {
-                fallback(R.drawable.erro)
-                error(R.drawable.erro)
-            }
+            binding.imageViewAdapterProdutoItem.carregarImagem(produto.imagem)
         }
 
         private fun formataParaMoedaBrasileira(valor: BigDecimal): String {
