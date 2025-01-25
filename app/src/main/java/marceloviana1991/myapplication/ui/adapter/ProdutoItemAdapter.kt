@@ -30,8 +30,7 @@ class ProdutoItemAdapter(
             val valor = binding.textViewValorAdapterProdutoItem
             val valorEmMoeda = formataParaMoedaBrasileira(produto.valor)
             valor.text = valorEmMoeda
-            binding.imageViewAdapterProdutoItem.load(
-                "https://images.pexels.com/photos/2288683/pexels-photo-2288683.jpeg")
+            binding.imageViewAdapterProdutoItem.load(produto.imagem)
         }
 
         private fun formataParaMoedaBrasileira(valor: BigDecimal): String {

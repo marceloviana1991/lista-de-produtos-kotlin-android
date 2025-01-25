@@ -6,9 +6,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import coil3.load
 import marceloviana1991.myapplication.R
 import marceloviana1991.myapplication.dao.ProdutosDao
 import marceloviana1991.myapplication.databinding.ActivityFormularioProdutoBinding
+import marceloviana1991.myapplication.databinding.FormularioImagemBinding
 import marceloviana1991.myapplication.model.Produto
 import java.math.BigDecimal
 
@@ -17,6 +19,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
     }
+    private var url: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,23 +32,29 @@ class FormularioProdutoActivity : AppCompatActivity() {
             insets
         }
 
-        val buttonSalvar = binding.buttonSalvarActivityFormularioProduto
-        buttonSalvar.setOnClickListener {
-            val produto = capturaDadosDoEditText()
-
-            ProdutosDao.adiciona(produto)
-
-            finish()
-        }
-
         binding.imageViewActivityFormularioProduto.setOnClickListener {
+            val bindingFormularioImagem = FormularioImagemBinding.inflate(layoutInflater)
+            bindingFormularioImagem.buttonFormularioImagem.setOnClickListener {
+                url = bindingFormularioImagem.editTextFormularioImagem.text.toString()
+                bindingFormularioImagem.imageViewFormularioImagem.load(url)
+            }
+
             AlertDialog.Builder(this)
-                .setView(R.layout.formulario_imagem)
+                .setView(bindingFormularioImagem.root)
                 .setPositiveButton("Confirmar") { _, _ ->
+                    binding.imageViewActivityFormularioProduto.load(url)
                 }
                 .setNegativeButton("Cancelar") { _, _ ->
                 }
                 .show()
+        }
+
+        val buttonSalvar = binding.buttonSalvarActivityFormularioProduto
+        buttonSalvar.setOnClickListener {
+            val produto = capturaDadosDoEditText()
+            ProdutosDao.adiciona(produto)
+
+            finish()
         }
     }
 
@@ -59,7 +68,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
         val valorEmBigDecimal = converteValor(valorEmTexto)
 
-        val produto = Produto(nome, descricao, valorEmBigDecimal)
+        val produto = Produto(nome, descricao, valorEmBigDecimal, url)
         return produto
     }
 
