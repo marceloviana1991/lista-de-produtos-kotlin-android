@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
+import coil3.request.error
+import coil3.request.fallback
+import marceloviana1991.myapplication.R
 import marceloviana1991.myapplication.model.Produto
 import marceloviana1991.myapplication.databinding.AdapterProdutoItemBinding
 import java.math.BigDecimal
@@ -30,7 +33,10 @@ class ProdutoItemAdapter(
             val valor = binding.textViewValorAdapterProdutoItem
             val valorEmMoeda = formataParaMoedaBrasileira(produto.valor)
             valor.text = valorEmMoeda
-            binding.imageViewAdapterProdutoItem.load(produto.imagem)
+            binding.imageViewAdapterProdutoItem.load(produto.imagem) {
+                fallback(R.drawable.erro)
+                error(R.drawable.erro)
+            }
         }
 
         private fun formataParaMoedaBrasileira(valor: BigDecimal): String {
