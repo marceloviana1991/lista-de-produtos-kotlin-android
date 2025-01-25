@@ -7,10 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import coil3.load
-import marceloviana1991.myapplication.R
 import marceloviana1991.myapplication.dao.ProdutosDao
 import marceloviana1991.myapplication.databinding.ActivityFormularioProdutoBinding
-import marceloviana1991.myapplication.databinding.FormularioImagemBinding
+import marceloviana1991.myapplication.databinding.AlertDialogFormularioImagemBinding
 import marceloviana1991.myapplication.model.Produto
 import java.math.BigDecimal
 
@@ -33,7 +32,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
         }
 
         binding.imageViewActivityFormularioProduto.setOnClickListener {
-            val bindingFormularioImagem = FormularioImagemBinding.inflate(layoutInflater)
+            val bindingFormularioImagem = AlertDialogFormularioImagemBinding.inflate(layoutInflater)
             bindingFormularioImagem.buttonFormularioImagem.setOnClickListener {
                 url = bindingFormularioImagem.editTextFormularioImagem.text.toString()
                 bindingFormularioImagem.imageViewFormularioImagem.load(url)
