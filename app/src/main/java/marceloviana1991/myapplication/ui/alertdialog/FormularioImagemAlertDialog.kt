@@ -10,22 +10,32 @@ class FormularioImagemAlertDialog(private val context: Context) {
 
     private var url: String? = null
 
-    fun carregaImagem(confirmaImagem: (imagem: String?) -> Unit) {
-        val binding = AlertDialogFormularioImagemBinding.inflate(
+    fun carregaImagem(
+        urlCadastrada: String?,
+        confirmaImagem: (imagem: String?) -> Unit
+    ) {
+        AlertDialogFormularioImagemBinding.inflate(
             LayoutInflater.from(context)
-        )
-        binding.buttonFormularioImagem.setOnClickListener {
-            url = binding.editTextFormularioImagem.text.toString()
-            binding.imageViewFormularioImagem.carregarImagem(url)
-        }
+        ).apply {
 
-        AlertDialog.Builder(context)
-            .setView(binding.root)
-            .setPositiveButton("Confirmar") { _, _ ->
-                confirmaImagem(url)
+            urlCadastrada?.let {
+                imageViewFormularioImagem.carregarImagem(it)
+                editTextFormularioImagem.setText(it)
             }
-            .setNegativeButton("Cancelar") { _, _ ->
+
+            buttonFormularioImagem.setOnClickListener {
+                url = editTextFormularioImagem.text.toString()
+                imageViewFormularioImagem.carregarImagem(url)
             }
-            .show()
+
+            AlertDialog.Builder(context)
+                .setView(root)
+                .setPositiveButton("Confirmar") { _, _ ->
+                    confirmaImagem(url)
+                }
+                .setNegativeButton("Cancelar") { _, _ ->
+                }
+                .show()
+        }
     }
 }

@@ -31,7 +31,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
         }
 
         binding.imageViewActivityFormularioProduto.setOnClickListener {
-            FormularioImagemAlertDialog(this).carregaImagem() {
+            FormularioImagemAlertDialog(this).carregaImagem(url) {
                 url -> this.url = url
                 binding.imageViewActivityFormularioProduto.carregarImagem(url)
             }
