@@ -2,15 +2,14 @@ package marceloviana1991.myapplication.ui.activity
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import marceloviana1991.myapplication.dao.ProdutosDao
 import marceloviana1991.myapplication.databinding.ActivityFormularioProdutoBinding
-import marceloviana1991.myapplication.databinding.AlertDialogFormularioImagemBinding
 import marceloviana1991.myapplication.extensions.carregarImagem
 import marceloviana1991.myapplication.model.Produto
+import marceloviana1991.myapplication.ui.alertdialog.FormularioImagemAlertDialog
 import java.math.BigDecimal
 
 class FormularioProdutoActivity : AppCompatActivity() {
@@ -32,20 +31,10 @@ class FormularioProdutoActivity : AppCompatActivity() {
         }
 
         binding.imageViewActivityFormularioProduto.setOnClickListener {
-            val bindingFormularioImagem = AlertDialogFormularioImagemBinding.inflate(layoutInflater)
-            bindingFormularioImagem.buttonFormularioImagem.setOnClickListener {
-                url = bindingFormularioImagem.editTextFormularioImagem.text.toString()
-                bindingFormularioImagem.imageViewFormularioImagem.carregarImagem(url)
+            FormularioImagemAlertDialog(this).carregaImagem() {
+                url -> this.url = url
+                binding.imageViewActivityFormularioProduto.carregarImagem(url)
             }
-
-            AlertDialog.Builder(this)
-                .setView(bindingFormularioImagem.root)
-                .setPositiveButton("Confirmar") { _, _ ->
-                    binding.imageViewActivityFormularioProduto.carregarImagem(url)
-                }
-                .setNegativeButton("Cancelar") { _, _ ->
-                }
-                .show()
         }
 
         val buttonSalvar = binding.buttonSalvarActivityFormularioProduto
