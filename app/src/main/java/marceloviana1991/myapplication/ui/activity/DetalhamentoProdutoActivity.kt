@@ -6,9 +6,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import marceloviana1991.myapplication.R
 import marceloviana1991.myapplication.databinding.ActivityDetalhamentoProdutoBinding
 import marceloviana1991.myapplication.extensions.carregarImagem
+import marceloviana1991.myapplication.extensions.formataParaMoedaBrasileira
 import marceloviana1991.myapplication.model.Produto
 
 class DetalhamentoProdutoActivity : AppCompatActivity() {
@@ -46,6 +46,10 @@ class DetalhamentoProdutoActivity : AppCompatActivity() {
     private fun preencheCampos(produtoCarregado: Produto) {
         with(binding) {
             imageViewActivityDetalhamentoProduto.carregarImagem(produtoCarregado.imagem)
+            textViewValorProdutoActivityDetalhamentoProduto.text =
+                produtoCarregado.valor.formataParaMoedaBrasileira()
+            textViewNomeProdutoActivityDetalhamentoProduto.text = produtoCarregado.nome
+            textViewDescricaoProdutoActivityDetalhamentoProduto.text = produtoCarregado.descricao
         }
     }
 }

@@ -20,5 +20,47 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:scaleType="centerCrop"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/text_view_valor_produto_activity_detalhamento_produto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/montserrat_bold"
+            android:textColor="@android:color/holo_green_dark"
+            android:background="@drawable/plano_de_fundo_arredondado"
+            android:elevation="10dp"
+            android:padding="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_view_activity_detalhamento_produto"
+            app:layout_constraintBottom_toBottomOf="@+id/image_view_activity_detalhamento_produto"
+            tools:text="R$ 1299,99"/>
+
+        <TextView
+            android:id="@+id/text_view_nome_produto_activity_detalhamento_produto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="28sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_valor_produto_activity_detalhamento_produto"
+            tools:text="Nome" />
+
+        <TextView
+            android:id="@+id/text_view_descricao_produto_activity_detalhamento_produto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_nome_produto_activity_detalhamento_produto"
+            tools:text="Descrição" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
