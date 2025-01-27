@@ -32,6 +32,16 @@ class PrincipalActivity : AppCompatActivity() {
         val recyclerView = binding.recyclerViewActivityPrincipal
         recyclerView.adapter = adapter
 
+        adapter.quandoClicaNoItem = {
+            val intent = Intent(
+                this,
+                DetalhamentoProdutoActivity::class.java
+            ).apply {
+                putExtra(CHAVE_PRODUTO, it)
+            }
+            startActivity(intent)
+        }
+
         val floatingActionButton = binding.floatingActionButton
         floatingActionButton.setOnClickListener {
             val intent = Intent(this, FormularioProdutoActivity::class.java)

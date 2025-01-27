@@ -14,4 +14,10 @@
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
+
+    <style name="Theme.ListaDeProdutos.NoActionBar" parent="Theme.AppCompat">
+        <!-- Remoção da App bar para o estilo -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

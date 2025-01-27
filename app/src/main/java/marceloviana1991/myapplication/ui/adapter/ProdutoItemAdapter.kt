@@ -8,37 +8,41 @@ import androidx.recyclerview.widget.RecyclerView
 import marceloviana1991.myapplication.model.Produto
 import marceloviana1991.myapplication.databinding.AdapterProdutoItemBinding
 import marceloviana1991.myapplication.extensions.carregarImagem
-import java.math.BigDecimal
-import java.text.NumberFormat
-import java.util.Locale
+import marceloviana1991.myapplication.extensions.formataParaMoedaBrasileira
 
 class ProdutoItemAdapter(
     private val context: Context,
-    produtos: List<Produto>
+    produtos: List<Produto>,
+    var quandoClicaNoItem: (produto: Produto) -> Unit = {}
 ) : RecyclerView.Adapter<ProdutoItemAdapter.ViewHolder>() {
 
     private val produtos = produtos.toMutableList()
 
-    class ViewHolder(
+    inner class ViewHolder(
         private val binding: AdapterProdutoItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+
+        private lateinit var produto: Produto
+
+        init {
+            itemView.setOnClickListener {
+                if (::produto.isInitialized) {
+                    quandoClicaNoItem(produto)
+                }
+            }
+        }
+
         fun vincula(produto: Produto) {
+            this.produto = produto
             val nome = binding.textViewNomeAdapterProdutoItem
             nome.text = produto.nome
             val descricao = binding.textViewDescricaoAdapterProdutoItem
             descricao.text = produto.descricao
             val valor = binding.textViewValorAdapterProdutoItem
-            val valorEmMoeda = formataParaMoedaBrasileira(produto.valor)
-            valor.text = valorEmMoeda
+            valor.text = produto.valor.formataParaMoedaBrasileira()
             binding.imageViewAdapterProdutoItem.carregarImagem(produto.imagem)
         }
 
-        private fun formataParaMoedaBrasileira(valor: BigDecimal): String {
-            val formatador: NumberFormat = NumberFormat
-                .getCurrencyInstance(Locale("pt", "br"))
-            val valorEmMoeda = formatador.format(valor)
-            return valorEmMoeda
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
