@@ -6,9 +6,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.room.Room
 import marceloviana1991.myapplication.dao.ProdutosDao
+import marceloviana1991.myapplication.database.AppDataBase
 import marceloviana1991.myapplication.ui.adapter.ProdutoItemAdapter
 import marceloviana1991.myapplication.databinding.ActivityPrincipalBinding
+import marceloviana1991.myapplication.model.Produto
+import java.math.BigDecimal
 
 class PrincipalActivity : AppCompatActivity() {
 
@@ -48,11 +52,20 @@ class PrincipalActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val db = Room.databaseBuilder(
+            this,
+            AppDataBase::class.java,
+            "lista-de-produtos.db"
+        ).allowMainThreadQueries()
+            .build()
 
+        val produtoDao = db.produtoDao()
+
+        adapter.atualiza(produtoDao.buscaTodos())
     }
 
     override fun onResume() {
         super.onResume()
-        adapter.atualiza(ProdutosDao.buscaTodos())
+//        adapter.atualiza(ProdutosDao.buscaTodos())
     }
 }

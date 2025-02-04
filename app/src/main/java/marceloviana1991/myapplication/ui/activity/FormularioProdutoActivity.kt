@@ -58,7 +58,11 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
         val valorEmBigDecimal = converteValor(valorEmTexto)
 
-        val produto = Produto(nome, descricao, valorEmBigDecimal, url)
+        val produto = Produto(
+            nome = nome,
+            descricao = descricao,
+            valor = valorEmBigDecimal,
+            imagem = url)
         return produto
     }
 
