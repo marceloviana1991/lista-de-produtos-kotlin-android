@@ -5,7 +5,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import marceloviana1991.myapplication.dao.ProdutosDao
+import marceloviana1991.myapplication.database.AppDataBase
 import marceloviana1991.myapplication.databinding.ActivityFormularioProdutoBinding
 import marceloviana1991.myapplication.extensions.carregarImagem
 import marceloviana1991.myapplication.model.Produto
@@ -40,10 +40,11 @@ class FormularioProdutoActivity : AppCompatActivity() {
         }
 
         val buttonSalvar = binding.buttonSalvarActivityFormularioProduto
+        val db = AppDataBase.instancia(this)
+        val produtoDao = db.produtoDao()
         buttonSalvar.setOnClickListener {
             val produto = capturaDadosDoEditText()
-            ProdutosDao.adiciona(produto)
-
+            produtoDao.salva(produto)
             finish()
         }
     }

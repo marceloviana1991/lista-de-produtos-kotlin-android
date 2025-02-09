@@ -12,7 +12,7 @@ import marceloviana1991.myapplication.extensions.formataParaMoedaBrasileira
 
 class ProdutoItemAdapter(
     private val context: Context,
-    produtos: List<Produto>,
+    produtos: List<Produto> = emptyList(),
     var quandoClicaNoItem: (produto: Produto) -> Unit = {}
 ) : RecyclerView.Adapter<ProdutoItemAdapter.ViewHolder>() {
 
