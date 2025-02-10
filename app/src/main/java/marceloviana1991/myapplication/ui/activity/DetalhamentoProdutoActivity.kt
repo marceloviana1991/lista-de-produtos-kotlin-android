@@ -1,6 +1,6 @@
 package marceloviana1991.myapplication.ui.activity
 
-import android.os.Build
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -17,9 +17,13 @@ import marceloviana1991.myapplication.model.Produto
 
 class DetalhamentoProdutoActivity : AppCompatActivity() {
 
-    private lateinit var produto: Produto
+    private var produtoId: Long? = null
+    private var produto: Produto? = null
     private val binding by lazy {
         ActivityDetalhamentoProdutoBinding.inflate(layoutInflater)
+    }
+    val produtoDao by lazy {
+        AppDataBase.instancia(this).produtoDao()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,21 +38,34 @@ class DetalhamentoProdutoActivity : AppCompatActivity() {
         tentaCarregarProduto()
     }
 
+    override fun onResume() {
+        super.onResume()
+        produtoId?.let { id ->
+            produto = produtoDao.buscaPorId(id)
+        }
+        produto?.let {
+            preencheCampos(it)
+        }?: finish()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_detalhes_produto, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(::produto.isInitialized) {
-            val db = AppDataBase.instancia(this)
-            val produtoDao = db.produtoDao()
+        if(produto != null) {
             when (item.itemId) {
                 R.id.menu_detalhes_produto_editar -> {
-
+                    Intent(this, FormularioProdutoActivity::class.java).apply {
+                        putExtra(CHAVE_PRODUTO, produto)
+                        startActivity(this)
+                    }
                 }
                 R.id.menu_detalhes_produto_remover -> {
-                    produtoDao.remove(produto)
+                    produto?.let {
+                        produtoDao.remove(it)
+                    }
                     finish()
                 }
             }
@@ -57,17 +74,8 @@ class DetalhamentoProdutoActivity : AppCompatActivity() {
     }
 
     private fun tentaCarregarProduto() {
-        //verificação de versão do compilador do SDK
-        val userData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            //método novo para os SDK mais novos
-            intent.getParcelableExtra(CHAVE_PRODUTO,Produto::class.java)
-        } else{
-            //método deprecated  para os SDK mais antigos
-            intent.getParcelableExtra<Produto>(CHAVE_PRODUTO)
-        }
-        userData?.let { produtoCarregado ->
-            produto = produtoCarregado
-            preencheCampos(produtoCarregado)
+        intent.getParcelableExtra<Produto>(CHAVE_PRODUTO)?.let { produtoCarregado ->
+            produtoId = produtoCarregado.id
         }?: finish()
     }
 
