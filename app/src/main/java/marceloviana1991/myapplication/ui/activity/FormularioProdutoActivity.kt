@@ -18,7 +18,11 @@ class FormularioProdutoActivity : AppCompatActivity() {
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
     }
     private var url: String? = null
-    private var idProduto = 0L
+    private var produtoId = 0L
+    private val produtoDao by lazy {
+        val db = AppDataBase.instancia(this)
+        db.produtoDao()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,29 +44,33 @@ class FormularioProdutoActivity : AppCompatActivity() {
             }
         }
 
-        intent.getParcelableExtra<Produto>(CHAVE_PRODUTO)?.let { produtoCarregado ->
-            title = "Editar Produto"
-            idProduto = produtoCarregado.id
-            url = produtoCarregado.imagem
-            binding.imageViewActivityFormularioProduto.carregarImagem(produtoCarregado.imagem)
-            binding.editTextNomeActivityFormularioProduto.setText(produtoCarregado.nome)
-            binding.editTextDescricaoActivityFormularioProduto.setText(produtoCarregado.descricao)
-            binding.editTextValorActivityFormularioProduto.setText(
-                produtoCarregado.valor.toPlainString())
-        }
+        produtoId = intent.getLongExtra(CHAVE_PRODUTO_ID, 0L)
 
         val buttonSalvar = binding.buttonSalvarActivityFormularioProduto
-        val db = AppDataBase.instancia(this)
-        val produtoDao = db.produtoDao()
+
         buttonSalvar.setOnClickListener {
             val produto = capturaDadosDoEditText()
-            if(idProduto > 0) {
-                produtoDao.edita(produto)
-            } else {
-                produtoDao.salva(produto)
-            }
+            produtoDao.salva(produto)
             finish()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        produtoDao.buscaPorId(produtoId)?.let {
+            preencheCampos(it)
+        }
+    }
+
+    private fun preencheCampos(produto: Produto) {
+        title = "Editar Produto"
+        url = produto.imagem
+        binding.imageViewActivityFormularioProduto.carregarImagem(produto.imagem)
+        binding.editTextNomeActivityFormularioProduto.setText(produto.nome)
+        binding.editTextDescricaoActivityFormularioProduto.setText(produto.descricao)
+        binding.editTextValorActivityFormularioProduto.setText(
+            produto.valor.toPlainString()
+        )
     }
 
     private fun capturaDadosDoEditText(): Produto {
@@ -76,7 +84,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
         val valorEmBigDecimal = converteValor(valorEmTexto)
 
         val produto = Produto(
-            id = idProduto,
+            id = produtoId,
             nome = nome,
             descricao = descricao,
             valor = valorEmBigDecimal,
