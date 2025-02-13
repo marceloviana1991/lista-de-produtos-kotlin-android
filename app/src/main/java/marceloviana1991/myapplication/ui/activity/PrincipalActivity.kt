@@ -6,6 +6,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import marceloviana1991.myapplication.database.AppDataBase
 import marceloviana1991.myapplication.ui.adapter.ProdutoItemAdapter
 import marceloviana1991.myapplication.databinding.ActivityPrincipalBinding
@@ -53,6 +58,13 @@ class PrincipalActivity : AppCompatActivity() {
         super.onResume()
         val db = AppDataBase.instancia(this)
         val produtoDao = db.produtoDao()
-        adapter.atualiza(produtoDao.buscaTodos())
+        val mainScope = MainScope()
+        mainScope.launch {
+            val produtos = withContext(Dispatchers.IO) {
+                produtoDao.buscaTodos()
+            }
+            adapter.atualiza(produtos)
+        }
+
     }
 }

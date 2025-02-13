@@ -20,8 +20,7 @@ abstract class AppDataBase: RoomDatabase() {
                 context,
                 AppDataBase::class.java,
                 "lista-de-produtos.db"
-            ).allowMainThreadQueries()
-                .build()
+            ).build()
         }
     }
 }
