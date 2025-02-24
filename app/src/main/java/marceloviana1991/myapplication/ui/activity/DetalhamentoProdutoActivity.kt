@@ -8,6 +8,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import marceloviana1991.myapplication.R
 import marceloviana1991.myapplication.database.AppDataBase
 import marceloviana1991.myapplication.databinding.ActivityDetalhamentoProdutoBinding
@@ -26,6 +30,7 @@ class DetalhamentoProdutoActivity : AppCompatActivity() {
     val produtoDao by lazy {
         AppDataBase.instancia(this).produtoDao()
     }
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,10 +46,14 @@ class DetalhamentoProdutoActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        produto = produtoDao.buscaPorId(produtoId)
-        produto?.let {
-            preencheCampos(it)
-        }?: finish()
+        scope.launch {
+            produto = produtoDao.buscaPorId(produtoId)
+            withContext(Dispatchers.Main) {
+                produto?.let {
+                    preencheCampos(it)
+                }?: finish()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -62,10 +71,12 @@ class DetalhamentoProdutoActivity : AppCompatActivity() {
                     }
                 }
                 R.id.menu_detalhes_produto_remover -> {
-                    produto?.let {
-                        produtoDao.remove(it)
+                    scope.launch {
+                        produto?.let {
+                            produtoDao.remove(it)
+                        }
+                        finish()
                     }
-                    finish()
                 }
             }
         }

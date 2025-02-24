@@ -5,6 +5,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import marceloviana1991.myapplication.database.AppDataBase
 import marceloviana1991.myapplication.databinding.ActivityFormularioProdutoBinding
 import marceloviana1991.myapplication.extensions.carregarImagem
@@ -23,6 +27,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
         val db = AppDataBase.instancia(this)
         db.produtoDao()
     }
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,15 +55,21 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
         buttonSalvar.setOnClickListener {
             val produto = capturaDadosDoEditText()
-            produtoDao.salva(produto)
-            finish()
+            scope.launch {
+                produtoDao.salva(produto)
+                finish()
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        produtoDao.buscaPorId(produtoId)?.let {
-            preencheCampos(it)
+        scope.launch {
+            produtoDao.buscaPorId(produtoId)?.let {
+                withContext(Dispatchers.Main) {
+                    preencheCampos(it)
+                }
+            }
         }
     }
 
